@@ -46,6 +46,50 @@ class Myweigh extends utils.Adapter {
 		Here a simple template for a boolean variable named "testVariable"
 		Because every adapter instance uses its own unique namespace variable names can't collide with other adapters variables
 		*/
+		await this.setObjectNotExistsAsync("message", {
+			type: "state",
+			common: {
+			        name: "Actual message",
+			        type: "string",
+			        role: "state",
+			        read: true,
+			        write: false,
+			},
+			native: {},
+		});
+		await this.setObjectNotExistsAsync("unit", {
+			type: "state",
+			common: {
+			        name: "Actual unit",
+			        type: "string",
+			        role: "state",
+			        read: true,
+			        write: false,
+			},
+			native: {},
+		});
+		await this.setObjectNotExistsAsync("weight", {
+			type: "state",
+			common: {
+			        name: "Actual weight",
+			        type: "number",
+			        role: "state",
+			        read: true,
+			        write: false,
+			},
+			native: {},
+		});
+		await this.setObjectNotExistsAsync("stable", {
+			type: "state",
+			common: {
+			        name: "Actual measurement is stable",
+			        type: "boolean",
+			        role: "indicator",
+			        read: true,
+			        write: false,
+			},
+			native: {},
+		});
 		await this.setObjectNotExistsAsync("dataRequest", {
 			type: "state",
 			common: {
