@@ -1,6 +1,6 @@
 {
-	"myweigh adapter settings": "Adaptereinstellungen für myweigh",
-	"Model": "Model",
-	"Port": "Port",
-	"Interval": "Interval"
+	"myweigh adapter settings": "Adaptereinstellungen für MyWeigh",
+	"Model": "Modell",
+	"Port": "Serialport",
+	"Interval": "Intervall"
 }
