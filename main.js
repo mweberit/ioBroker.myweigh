@@ -197,7 +197,7 @@ class Myweigh extends utils.Adapter {
 					if (err) {
 						this.log.error('Error while opening the port ' + err);
 					} else {
-						this.log.info("do write");
+						//this.log.info("do write");
 						var buffer = new Buffer.alloc(1);
 						buffer[0] = 0x0d;
 						port.write(buffer);
@@ -205,14 +205,14 @@ class Myweigh extends utils.Adapter {
 				});
 				
 				port.on('readable', function () {
-					this.log.info("should read now");
+					//this.log.info("should read now");
 					var read = port.read();
 					port.close();
-					this.log.info("read data ok");
+					//this.log.info("read data ok");
 
 					var output = Buffer.from(read, 'hex');
 					var str = output.toString();
-					this.log.info("read " + str);
+					//this.log.info("read " + str);
 					
 					if (str.charAt(1) == "M") {
 						this.setStateAsync("message", { val: str.substring(2, 8), ack: true });
