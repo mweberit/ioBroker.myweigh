@@ -13,10 +13,10 @@
 				"it": "Versione iniziale",
 				"es": "Versión inicial",
 				"pl": "Pierwsze wydanie",
+				"uk": "initial release",
 				"zh-cn": "首次出版"
 			}
 		},
-		"title": "MyWeigh",
 		"titleLang": {
 			"en": "MyWeigh",
 			"de": "MyWeigh",
@@ -27,6 +27,7 @@
 			"it": "MyWeigh",
 			"es": "MyWeigh",
 			"pl": "MyWeigh",
+			"uk": "MyWeigh",
 			"zh-cn": "MyWeigh"
 		},
 		"desc": {
@@ -39,13 +40,13 @@
 			"it": "Verbindet Waagen von MyWeigh mit ioBroker",
 			"es": "Verbindet Waagen von MyWeigh mit ioBroker",
 			"pl": "Verbindet Waagen von MyWeigh mit ioBroker",
+			"uk": "Verbindet Waagen von MyWeigh mit ioBroker",
 			"zh-cn": "Verbindet Waagen von MyWeigh mit ioBroker"
 		},
 		"authors": [
 			"mweberit <m.weber@cirosoft.de>"
 		],
 		"keywords": [
-			"iobroker",
 			"scale",
 			"myweigh",
 			"weight"
