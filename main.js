@@ -197,10 +197,10 @@ class Myweigh extends utils.Adapter {
 					if (err) {
 						this.log.error('Error while opening the port ' + err);
 					} else {
+						this.log.info("do write");
 						var buffer = new Buffer.alloc(1);
 						buffer[0] = 0x0d;
 						port.write(buffer);
-						this.log.info("write ok");
 					}              
 				});
 				
