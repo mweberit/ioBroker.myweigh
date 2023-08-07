@@ -182,7 +182,7 @@ class Myweigh extends utils.Adapter {
 			this.log.info(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
 
 			if (id.endsWith(".dataRequest") && state.val == true) {
-				this.log.info("dataRequest V9 from " + this.config.Port);
+				//this.log.info("dataRequest V9 from " + this.config.Port);
 
 				this.setStateAsync("dataRequest", { val: false, ack: true });
 				
@@ -217,11 +217,11 @@ class Myweigh extends utils.Adapter {
 					//this.log.info("read " + str);
 					
 					if (str.charAt(1) == "M") {
-						adapter.setStateAsync("message", { val: str.substring(2, 8), ack: true });
+						adapter.setStateAsync("message", { val: str.substring(2, 9), ack: true });
 					} else if (str.charAt(1) == "W") {
 						adapter.setStateAsync("message", { val: "", ack: true });
-						adapter.setStateAsync("unit", { val: str.substring(9, 10), ack: true });
-						adapter.setStateAsync("weight", { val: Number(str.substring(2, 8)), ack: true });
+						adapter.setStateAsync("unit", { val: str.substring(9, 11), ack: true });
+						adapter.setStateAsync("weight", { val: Number(str.substring(2, 9)), ack: true });
 						adapter.setStateAsync("stable", { val: str.charAt(11) == "S", ack: true });
 					}
 				});				
