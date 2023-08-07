@@ -10,7 +10,9 @@ const utils = require("@iobroker/adapter-core");
 
 // Load your modules here, e.g.:
 // const fs = require("fs");
-const { SerialPort } = require("serialport");
+//const { SerialPort } = require("serialport");
+var serialport = require("serialport");
+var SerialPort = serialport.SerialPort;
 
 class Myweigh extends utils.Adapter {
 
@@ -181,15 +183,14 @@ class Myweigh extends utils.Adapter {
 
 				this.setStateAsync("dataRequest", { val: false, ack: true });
 				
-				port = new SerialPort({
-				            path:       this.config.Port,
+				var port = new SerialPort(this.config.Port, {
 				            baudRate:   9600,
 				            dataBits:   8,
 				            stopBits:   1,
 				            parity:     'none',
 				            autoOpen:   false
 				        });
-				port.path = this.config.Port;
+
 				port.open(function (err) {
 					if (err) {
 						console.log('Error while opening the port ' + err);
