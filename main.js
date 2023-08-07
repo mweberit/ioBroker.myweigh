@@ -179,7 +179,7 @@ class Myweigh extends utils.Adapter {
 			this.log.info(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
 
 			if (id.endsWith(".dataRequest") && state.val == true) {
-				this.log.info("dataRequest V6 from " + this.config.Port);
+				this.log.info("dataRequest V7 from " + this.config.Port);
 
 				this.setStateAsync("dataRequest", { val: false, ack: true });
 				
@@ -208,18 +208,19 @@ class Myweigh extends utils.Adapter {
 					var read = port.read();
 					port.close();
 					//console.log(read);
-					var output = Buffer.from(read, 'hex').toString();
-					this.log.info("READ  " + output);
+					var output = Buffer.from(read, 'hex');
+					var str = output.toString();
+					this.log.info("READ  " + str);
 					
 					//console.log(output.toString());
 					//setState("0_userdata.0.HD_150_Response", output.toString());
 					if (output.charAt(1) == "M") {
-						this.setStateAsync("message", { val: output.substring(2, 8), ack: true });
+						this.setStateAsync("message", { val: str.substring(2, 8), ack: true });
 					} else {
 						this.setStateAsync("message", { val: "", ack: true });
-						this.setStateAsync("unit", { val: output.substring(9, 10), ack: true });
-						this.setStateAsync("weight", { val: Number(output.substring(2, 8)), ack: true });
-						this.setStateAsync("stable", { val: output.charAt(11) == "S", ack: true });
+						this.setStateAsync("unit", { val: str.substring(9, 10), ack: true });
+						this.setStateAsync("weight", { val: Number(str.substring(2, 8)), ack: true });
+						this.setStateAsync("stable", { val: str.charAt(11) == "S", ack: true });
 					}
 				});				
 			}
