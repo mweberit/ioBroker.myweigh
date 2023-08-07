@@ -11,8 +11,9 @@ const utils = require("@iobroker/adapter-core");
 // Load your modules here, e.g.:
 // const fs = require("fs");
 //const { SerialPort } = require("serialport");
-var serialport = require("serialport");
-var SerialPort = serialport.SerialPort;
+var SerialPort = require("serialport");
+//var serialport = require("serialport");
+//var SerialPort = serialport.SerialPort;
 
 class Myweigh extends utils.Adapter {
 
@@ -194,29 +195,25 @@ class Myweigh extends utils.Adapter {
 
 				port.open(function (err) {
 					if (err) {
-						console.log('Error while opening the port ' + err);
+						this.log.error('Error while opening the port ' + err);
 					} else {
-						//console.log('port open');
 						var buffer = new Buffer.alloc(1);
 						buffer[0] = 0x0d;
 						port.write(buffer);
-						//console.log('write done');
 					}              
 				});
 				
 				port.on('readable', function () {
 					var read = port.read();
 					port.close();
-					//console.log(read);
+
 					var output = Buffer.from(read, 'hex');
 					var str = output.toString();
-					this.log.info("READ  " + str);
+					this.log.info("read " + str);
 					
-					//console.log(output.toString());
-					//setState("0_userdata.0.HD_150_Response", output.toString());
 					if (str.charAt(1) == "M") {
 						this.setStateAsync("message", { val: str.substring(2, 8), ack: true });
-					} else {
+					} else if (str.charAt(1) == "W") {
 						this.setStateAsync("message", { val: "", ack: true });
 						this.setStateAsync("unit", { val: str.substring(9, 10), ack: true });
 						this.setStateAsync("weight", { val: Number(str.substring(2, 8)), ack: true });
