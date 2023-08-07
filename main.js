@@ -10,8 +10,8 @@ const utils = require("@iobroker/adapter-core");
 
 // Load your modules here, e.g.:
 // const fs = require("fs");
-//const { SerialPort } = require("serialport");
-var SerialPort = require("serialport");
+const { SerialPort } = require("serialport");
+//var SerialPort = require("serialport");
 //var serialport = require("serialport");
 //var SerialPort = serialport.SerialPort;
 
