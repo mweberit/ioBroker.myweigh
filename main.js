@@ -177,7 +177,8 @@ class Myweigh extends utils.Adapter {
 			this.log.info(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
 
 			if (id.endsWith(".dataRequest") && state.val == true) {
-				await this.setStateAsync("dataRequest", { val: true, ack: true });
+				this.log.info(`dataRequest`);
+				await this.setStateAsync("dataRequest", { val: false, ack: true });
 
 				port = new SerialPort({
 				            path:       this.config.Port,
