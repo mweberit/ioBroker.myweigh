@@ -200,15 +200,15 @@ class Myweigh extends utils.Adapter {
 						var buffer = new Buffer.alloc(1);
 						buffer[0] = 0x0d;
 						port.write(buffer);
-						this.log.debug("write ok");
+						this.log.info("write ok");
 					}              
 				});
 				
 				port.on('readable', function () {
-					this.log.debug("should read now");
+					this.log.info("should read now");
 					var read = port.read();
 					port.close();
-					this.log.debug("read data ok");
+					this.log.info("read data ok");
 
 					var output = Buffer.from(read, 'hex');
 					var str = output.toString();
