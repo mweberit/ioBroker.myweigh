@@ -1,0 +1,31 @@
+{
+	"i18n": true,
+	"type": "panel",
+	"items": {
+		"Model": {
+			"type": "select",
+			"label": "Model",
+			"options": [
+				{
+					"label": "HD-150",
+					"value": "HD150"
+				},
+				{
+					"label": "HD-300",
+					"value": "HD300"
+				}
+			],
+			"newLine": true
+		},
+		"Port": {
+			"type": "text",
+			"label": "Port",
+			"newLine": true
+		},
+		"Interval": {
+			"type": "number",
+			"label": "Interval",
+			"newLine": true
+		}
+	}
+}

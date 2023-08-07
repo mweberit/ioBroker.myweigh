@@ -1,0 +1,87 @@
+{
+	"common": {
+		"name": "myweigh",
+		"version": "0.0.1",
+		"news": {
+			"0.0.1": {
+				"en": "initial release",
+				"de": "Erstveröffentlichung",
+				"ru": "Начальная версия",
+				"pt": "lançamento inicial",
+				"nl": "Eerste uitgave",
+				"fr": "Première version",
+				"it": "Versione iniziale",
+				"es": "Versión inicial",
+				"pl": "Pierwsze wydanie",
+				"zh-cn": "首次出版"
+			}
+		},
+		"title": "MyWeigh",
+		"titleLang": {
+			"en": "MyWeigh",
+			"de": "MyWeigh",
+			"ru": "MyWeigh",
+			"pt": "MyWeigh",
+			"nl": "MyWeigh",
+			"fr": "MyWeigh",
+			"it": "MyWeigh",
+			"es": "MyWeigh",
+			"pl": "MyWeigh",
+			"zh-cn": "MyWeigh"
+		},
+		"desc": {
+			"en": "Verbindet Waagen von MyWeigh mit ioBroker",
+			"de": "Verbindet Waagen von MyWeigh mit ioBroker",
+			"ru": "Verbindet Waagen von MyWeigh mit ioBroker",
+			"pt": "Verbindet Waagen von MyWeigh mit ioBroker",
+			"nl": "Verbindet Waagen von MyWeigh mit ioBroker",
+			"fr": "Verbindet Waagen von MyWeigh mit ioBroker",
+			"it": "Verbindet Waagen von MyWeigh mit ioBroker",
+			"es": "Verbindet Waagen von MyWeigh mit ioBroker",
+			"pl": "Verbindet Waagen von MyWeigh mit ioBroker",
+			"zh-cn": "Verbindet Waagen von MyWeigh mit ioBroker"
+		},
+		"authors": [
+			"mweberit <m.weber@cirosoft.de>"
+		],
+		"keywords": [
+			"iobroker",
+			"scale",
+			"myweigh",
+			"weight"
+		],
+		"license": "MIT",
+		"platform": "Javascript/Node.js",
+		"main": "main.js",
+		"icon": "myweigh.png",
+		"enabled": true,
+		"extIcon": "https://raw.githubusercontent.com/mweberit/ioBroker.myweigh/main/admin/myweigh.png",
+		"readme": "https://github.com/mweberit/ioBroker.myweigh/blob/main/README.md",
+		"loglevel": "info",
+		"mode": "daemon",
+		"type": "health",
+		"compact": true,
+		"connectionType": "local",
+		"dataSource": "poll",
+		"adminUI": {
+			"config": "json"
+		},
+		"dependencies": [
+			{
+				"js-controller": ">=3.3.22"
+			}
+		],
+		"globalDependencies": [
+			{
+				"admin": ">=5.1.13"
+			}
+		]
+	},
+	"native": {
+		"Model": "HD150",
+		"Port": "/dev/ttyUSB0",
+		"Interval": 0
+	},
+	"objects": [],
+	"instanceObjects": []
+}
