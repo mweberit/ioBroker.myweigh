@@ -178,7 +178,7 @@ class Myweigh extends utils.Adapter {
 
 			if (id.endsWith(".dataRequest") && state.val == true) {
 				this.log.info(`dataRequest`);
-				await this.setStateAsync("dataRequest", { val: false, ack: true });
+				this.setStateAsync("dataRequest", { val: false, ack: true });
 
 				port = new SerialPort({
 				            path:       this.config.Port,
@@ -209,12 +209,12 @@ class Myweigh extends utils.Adapter {
 					//console.log(output.toString());
 					//setState("0_userdata.0.HD_150_Response", output.toString());
 					if (output.charAt(1) == "M") {
-						await this.setStateAsync("message", { val: output.substring(2, 8), ack: true });
+						this.setStateAsync("message", { val: output.substring(2, 8), ack: true });
 					} else {
-						await this.setStateAsync("message", { val: "", ack: true });
-						await this.setStateAsync("unit", { val: output.substring(9, 10), ack: true });
-						await this.setStateAsync("weight", { val: Number(output.substring(2, 8)), ack: true });
-						await this.setStateAsync("stable", { val: output.charAt(11) == "S", ack: true });
+						this.setStateAsync("message", { val: "", ack: true });
+						this.setStateAsync("unit", { val: output.substring(9, 10), ack: true });
+						this.setStateAsync("weight", { val: Number(output.substring(2, 8)), ack: true });
+						this.setStateAsync("stable", { val: output.charAt(11) == "S", ack: true });
 					}
 				});				
 			}
