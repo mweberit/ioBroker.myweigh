@@ -7,12 +7,12 @@
 			"label": "Model",
 			"options": [
 				{
-					"label": "HD-150",
-					"value": "HD150"
+					"label": "HD-Series",
+					"value": "HDSeries"
 				},
 				{
-					"label": "HD-300",
-					"value": "HD300"
+					"label": "HDCS-Series",
+					"value": "HDCSSeries"
 				}
 			],
 			"newLine": true
