@@ -177,20 +177,19 @@ class Myweigh extends utils.Adapter {
 			this.log.info(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
 
 			if (id.endsWith(".dataRequest") && state.val == true) {
-
-				const path = this.config.Port;
-				this.log.info("dataRequest V3 from " + path);
+				this.log.info("dataRequest V4 from " + this.config.Port);
 
 				this.setStateAsync("dataRequest", { val: false, ack: true });
-				port = new SerialPort(path, {
-				            //path,
+				
+				port = new SerialPort({
+				            path:       this.config.Port,
 				            baudRate:   9600,
 				            dataBits:   8,
 				            stopBits:   1,
 				            parity:     'none',
 				            autoOpen:   false
 				        });
-				
+				port.path = this.config.Port;
 				port.open(function (err) {
 					if (err) {
 						console.log('Error while opening the port ' + err);
