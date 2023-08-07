@@ -10,6 +10,8 @@ const utils = require("@iobroker/adapter-core");
 
 // Load your modules here, e.g.:
 // const fs = require("fs");
+
+var adapter = utils.adapter('myweigh');
 const { SerialPort } = require("serialport");
 //var SerialPort = require("serialport");
 //var serialport = require("serialport");
@@ -203,7 +205,7 @@ class Myweigh extends utils.Adapter {
 						port.write(buffer);
 					}              
 				});
-				
+			
 				port.on('readable', function () {
 					//this.log.info("should read now");
 					var read = port.read();
@@ -215,12 +217,12 @@ class Myweigh extends utils.Adapter {
 					//this.log.info("read " + str);
 					
 					if (str.charAt(1) == "M") {
-						setStateAsync("message", { val: str.substring(2, 8), ack: true });
+						adapter.setStateAsync("message", { val: str.substring(2, 8), ack: true });
 					} else if (str.charAt(1) == "W") {
-						setStateAsync("message", { val: "", ack: true });
-						setStateAsync("unit", { val: str.substring(9, 10), ack: true });
-						setStateAsync("weight", { val: Number(str.substring(2, 8)), ack: true });
-						setStateAsync("stable", { val: str.charAt(11) == "S", ack: true });
+						adapter.setStateAsync("message", { val: "", ack: true });
+						adapter.setStateAsync("unit", { val: str.substring(9, 10), ack: true });
+						adapter.setStateAsync("weight", { val: Number(str.substring(2, 8)), ack: true });
+						adapter.setStateAsync("stable", { val: str.charAt(11) == "S", ack: true });
 					}
 				});				
 			}
