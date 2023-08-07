@@ -182,7 +182,7 @@ class Myweigh extends utils.Adapter {
 			//this.log.info(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
 
 			if (id.endsWith(".dataRequest") && state.val == true) {
-				//this.log.info("dataRequest V9 from " + this.config.Port);
+				this.log.info("dataRequest");
 
 				this.setStateAsync("dataRequest", { val: false, ack: true });
 				
