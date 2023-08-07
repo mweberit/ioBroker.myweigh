@@ -175,6 +175,48 @@ class Myweigh extends utils.Adapter {
 		if (state) {
 			// The state was changed
 			this.log.info(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
+
+			if (id.endsWith(".dataRequest") && state.val == true) {
+				await this.setStateAsync("dataRequest", { val: true, ack: true });
+
+				port = new SerialPort({
+				            path:       this.config.Port,
+				            baudRate:   9600,
+				            dataBits:   8,
+				            stopBits:   1,
+				            parity:     'none',
+				            autoOpen:   false
+				        });
+				
+				port.open(function (err) {
+					if (err) {
+						console.log('Error while opening the port ' + err);
+					} else {
+						//console.log('port open');
+						var buffer = new Buffer.alloc(1);
+						buffer[0] = 0x0d;
+						port.write(buffer);
+						//console.log('write done');
+					}              
+				});
+				
+				port.on('readable', function () {
+					var read = port.read();
+					port.close();
+					//console.log(read);
+					var output = Buffer.from(read, 'hex');
+					//console.log(output.toString());
+					//setState("0_userdata.0.HD_150_Response", output.toString());
+					if (output.charAt(1) == "M") {
+						await this.setStateAsync("message", { val: output.substring(2, 8), ack: true });
+					} else {
+						await this.setStateAsync("message", { val: "", ack: true });
+						await this.setStateAsync("unit", { val: output.substring(9, 10), ack: true });
+						await this.setStateAsync("weight", { val: Number(output.substring(2, 8)), ack: true });
+						await this.setStateAsync("stable", { val: output.charAt(11) == "S", ack: true });
+					}
+				});				
+			}
 		} else {
 			// The state was deleted
 			this.log.info(`state ${id} deleted`);
