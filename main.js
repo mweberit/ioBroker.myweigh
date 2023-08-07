@@ -179,17 +179,18 @@ class Myweigh extends utils.Adapter {
 			this.log.info(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
 
 			if (id.endsWith(".dataRequest") && state.val == true) {
-				this.log.info("dataRequest V4 from " + this.config.Port);
+				this.log.info("dataRequest V5 from " + this.config.Port);
 
 				this.setStateAsync("dataRequest", { val: false, ack: true });
 				
-				var port = new SerialPort(this.config.Port, {
-				            baudRate:   9600,
-				            dataBits:   8,
-				            stopBits:   1,
-				            parity:     'none',
-				            autoOpen:   false
-				        });
+				var port = new SerialPort({
+					path:	    this.config.Port,
+				        baudRate:   9600,
+				        dataBits:   8,
+				        stopBits:   1,
+				        parity:     'none',
+				        autoOpen:   false
+				});
 
 				port.open(function (err) {
 					if (err) {
