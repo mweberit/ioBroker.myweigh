@@ -180,8 +180,9 @@ class Myweigh extends utils.Adapter {
 				this.log.info("dataRequest from " + this.config.Port);
 				this.setStateAsync("dataRequest", { val: false, ack: true });
 
+				const path = this.config.Port;
 				port = new SerialPort({
-				            path:       this.config.Port,
+				            path,
 				            baudRate:   9600,
 				            dataBits:   8,
 				            stopBits:   1,
