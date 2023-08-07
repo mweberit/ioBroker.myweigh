@@ -179,7 +179,7 @@ class Myweigh extends utils.Adapter {
 			this.log.info(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
 
 			if (id.endsWith(".dataRequest") && state.val == true) {
-				this.log.info("dataRequest V5 from " + this.config.Port);
+				this.log.info("dataRequest V6 from " + this.config.Port);
 
 				this.setStateAsync("dataRequest", { val: false, ack: true });
 				
@@ -208,7 +208,9 @@ class Myweigh extends utils.Adapter {
 					var read = port.read();
 					port.close();
 					//console.log(read);
-					var output = Buffer.from(read, 'hex');
+					var output = Buffer.from(read, 'hex').toString();
+					this.log.info("READ  " + output);
+					
 					//console.log(output.toString());
 					//setState("0_userdata.0.HD_150_Response", output.toString());
 					if (output.charAt(1) == "M") {
