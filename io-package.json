@@ -13,7 +13,7 @@
 				"it": "Versione iniziale",
 				"es": "Versión inicial",
 				"pl": "Pierwsze wydanie",
-				"uk": "initial release",
+				"uk": "початковий реліз",
 				"zh-cn": "首次出版"
 			}
 		},
@@ -31,17 +31,17 @@
 			"zh-cn": "MyWeigh"
 		},
 		"desc": {
-			"en": "Verbindet Waagen von MyWeigh mit ioBroker",
+		  	"en": "Connects scales from MyWeigh to ioBroker",
 			"de": "Verbindet Waagen von MyWeigh mit ioBroker",
-			"ru": "Verbindet Waagen von MyWeigh mit ioBroker",
-			"pt": "Verbindet Waagen von MyWeigh mit ioBroker",
-			"nl": "Verbindet Waagen von MyWeigh mit ioBroker",
-			"fr": "Verbindet Waagen von MyWeigh mit ioBroker",
-			"it": "Verbindet Waagen von MyWeigh mit ioBroker",
-			"es": "Verbindet Waagen von MyWeigh mit ioBroker",
-			"pl": "Verbindet Waagen von MyWeigh mit ioBroker",
-			"uk": "Verbindet Waagen von MyWeigh mit ioBroker",
-			"zh-cn": "Verbindet Waagen von MyWeigh mit ioBroker"
+			"ru": "Соединяет весы от MyWeigh до ioBroker",
+			"pt": "Conecta escalas de MyWeigh ao ioBroker",
+			"nl": "Verbindingsschaal van Myweigh tot ioBroker",
+			"fr": "Connecte les échelles de MyWeigh à ioBroker",
+			"it": "Collega scale da MyWeigh a ioBroker",
+			"es": "Conecta escalas de MyWeigh a ioBroker",
+			"pl": "Połącza się z MyWeigh do ioBroker",
+			"uk": "З'єднання ваги від MyWeigh до ioBroker",
+			"zh-cn": "从我韦格到奥布罗克的连接规模"
 		},
 		"authors": [
 			"mweberit <m.weber@cirosoft.de>"
@@ -79,10 +79,74 @@
 		]
 	},
 	"native": {
-		"Model": "HD150",
+		"Model": "HDSeries",
 		"Port": "/dev/ttyUSB0",
 		"Interval": 0
 	},
 	"objects": [],
-	"instanceObjects": []
+	"instanceObjects": [
+		    {
+		      "_id": "message",
+		      "common": {
+		        "name": "Actual message",
+		        "desc": "",
+		        "type": "string",
+		        "read": true,
+		        "write": false,
+		        "role": "state"
+		      },
+		      "type": "state",
+		      "native": { }
+		    },				    
+		    {
+		      "_id": "unit",
+		      "common": {
+		        "name": "Actual unit",
+		        "desc": "",
+		        "type": "string",
+		        "read": true,
+		        "write": false,
+		        "role": "state"
+		      },
+		      "type": "state",
+		      "native": { }
+		    },				    
+		    {
+		      "_id": "weight",
+		      "common": {
+		        "name": "Actual weight",
+		        "desc": "",
+		        "type": "number",
+		        "read": true,
+		        "write": false,
+		        "role": "state"
+		      },
+		      "type": "state",
+		      "native": { }
+		    },				    
+		    {
+		      "_id": "stable",
+		      "common": {
+		        "name": "Actual measurement is stable",
+		        "type": "boolean",
+		        "read": true,
+		        "write": false,
+		        "role": "indicator"
+		      },
+		      "type": "state",
+		      "native": {}
+		    },
+		    {
+		      "_id": "dataRequest",
+		      "common": {
+		        "name": "Get data from scale now",
+		        "type": "boolean",
+		        "read": true,
+		        "write": true,
+		        "role": "switch"
+		      },
+		      "type": "state",
+		      "native": {}
+		    },
+	]
 }
