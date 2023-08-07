@@ -215,12 +215,12 @@ class Myweigh extends utils.Adapter {
 					//this.log.info("read " + str);
 					
 					if (str.charAt(1) == "M") {
-						this.setStateAsync("message", { val: str.substring(2, 8), ack: true });
+						setStateAsync("message", { val: str.substring(2, 8), ack: true });
 					} else if (str.charAt(1) == "W") {
-						this.setStateAsync("message", { val: "", ack: true });
-						this.setStateAsync("unit", { val: str.substring(9, 10), ack: true });
-						this.setStateAsync("weight", { val: Number(str.substring(2, 8)), ack: true });
-						this.setStateAsync("stable", { val: str.charAt(11) == "S", ack: true });
+						setStateAsync("message", { val: "", ack: true });
+						setStateAsync("unit", { val: str.substring(9, 10), ack: true });
+						setStateAsync("weight", { val: Number(str.substring(2, 8)), ack: true });
+						setStateAsync("stable", { val: str.charAt(11) == "S", ack: true });
 					}
 				});				
 			}
