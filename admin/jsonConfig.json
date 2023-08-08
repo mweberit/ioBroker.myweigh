@@ -22,10 +22,5 @@
 			"label": "Port",
 			"newLine": true
 		},
-		"Interval": {
-			"type": "number",
-			"label": "Interval",
-			"newLine": true
-		}
 	}
 }
