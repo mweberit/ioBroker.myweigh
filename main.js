@@ -205,11 +205,22 @@ class Myweigh extends utils.Adapter {
 			// The state was changed
 			//this.log.info(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
 
-			if (id.endsWith(".getData") && state.val == true) {
-				this.log.info("getData");
+			if (state.val == true && (id.endsWith(".getData") || id.endsWith(".setMode") || id.endsWith(".setTare"))) {
+				var buffer = new Buffer.alloc(1);
+				if (id.endsWith(".getData")) {
+					this.log.info("getData");
+					this.setStateAsync("getData", { val: false, ack: true });
+					buffer[0] = 0x0d;
+				} else if (id.endsWith(".setMode") && state.val == true) {
+					this.log.info("setMode");
+					this.setStateAsync("setMode", { val: false, ack: true });
+					buffer[0] = 0x4d; // M
+				} else if (id.endsWith(".setTare") && state.val == true) {
+					this.log.info("setTare");
+					this.setStateAsync("setTare", { val: false, ack: true });
+					buffer[0] = 0x54; // T
+				}
 
-				this.setStateAsync("getData", { val: false, ack: true });
-				
 				var port = new SerialPort({
 					path:	    this.config.Port,
 				        baudRate:   9600,
@@ -223,85 +234,32 @@ class Myweigh extends utils.Adapter {
 					if (err) {
 						adapter.log.error('Error while opening the port ' + err);
 					} else {
-						//this.log.info("do write");
-						var buffer = new Buffer.alloc(1);
-						buffer[0] = 0x0d;
 						port.write(buffer);
 					}              
 				});
 			
 				port.on('readable', function () {
-					//this.log.info("should read now");
 					var read = port.read();
 					port.close();
-					//this.log.info("read data ok");
 
 					var output = Buffer.from(read, 'hex');
 					var str = output.toString();
 					adapter.log.info(str.replaceAll(" ", "_"));
-					
-					if (str.charAt(1) == "M") {
-						adapter.setStateAsync("message", { val: str.substring(2, 9), ack: true });
-					} else if (str.charAt(1) == "W") {
-						var w = Number(str.substring(3, 9));
-						if (str.charAt(2) == "-")
-							w = w * (-1);
-						adapter.setStateAsync("message", { val: "", ack: true });
-						adapter.setStateAsync("unit", { val: str.substring(9, 11), ack: true });
-						adapter.setStateAsync("weight", { val: w, ack: true });
-						adapter.setStateAsync("stable", { val: str.charAt(11) == "S", ack: true });
+
+					if (id.endsWith(".getData")) {
+						if (str.charAt(1) == "M") {
+							adapter.setStateAsync("message", { val: str.substring(2, 9), ack: true });
+						} else if (str.charAt(1) == "W") {
+							var w = Number(str.substring(3, 9));
+							if (str.charAt(2) == "-")
+								w = w * (-1);
+							adapter.setStateAsync("message", { val: "", ack: true });
+							adapter.setStateAsync("unit", { val: str.substring(9, 11), ack: true });
+							adapter.setStateAsync("weight", { val: w, ack: true });
+							adapter.setStateAsync("stable", { val: str.charAt(11) == "S", ack: true });
+						}
 					}
 				});				
-			}
-			else  if (id.endsWith(".setMode") && state.val == true) {
-				this.log.info("setMode");
-
-				this.setStateAsync("setMode", { val: false, ack: true });
-				
-				var port = new SerialPort({
-					path:	    this.config.Port,
-				        baudRate:   9600,
-				        dataBits:   8,
-				        stopBits:   1,
-				        parity:     'none',
-				        autoOpen:   false
-				});
-
-				port.open(function (err) {
-					if (err) {
-						adapter.log.error('Error while opening the port ' + err);
-					} else {
-						//this.log.info("do write");
-						var buffer = new Buffer.alloc(1);
-						buffer[0] = 0x4d; // M
-						port.write(buffer);
-					}              
-				});
-			}
-			else if (id.endsWith(".setTare") && state.val == true) {
-				this.log.info("setTare");
-
-				this.setStateAsync("setTare", { val: false, ack: true });
-				
-				var port = new SerialPort({
-					path:	    this.config.Port,
-				        baudRate:   9600,
-				        dataBits:   8,
-				        stopBits:   1,
-				        parity:     'none',
-				        autoOpen:   false
-				});
-
-				port.open(function (err) {
-					if (err) {
-						adapter.log.error('Error while opening the port ' + err);
-					} else {
-						//this.log.info("do write");
-						var buffer = new Buffer.alloc(1);
-						buffer[0] = 0x54; // T
-						port.write(buffer);
-					}              
-				});
 			}
 		} else {
 			// The state was deleted
