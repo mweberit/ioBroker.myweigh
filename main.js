@@ -221,7 +221,7 @@ class Myweigh extends utils.Adapter {
 
 				port.open(function (err) {
 					if (err) {
-						this.log.error('Error while opening the port ' + err);
+						adapter.log.error('Error while opening the port ' + err);
 					} else {
 						//this.log.info("do write");
 						var buffer = new Buffer.alloc(1);
@@ -266,19 +266,19 @@ class Myweigh extends utils.Adapter {
 
 				port.open(function (err) {
 					if (err) {
-						this.log.error('Error while opening the port ' + err);
+						adapter.log.error('Error while opening the port ' + err);
 					} else {
 						//this.log.info("do write");
 						var buffer = new Buffer.alloc(1);
-						buffer[0] = 0x4d;
+						buffer[0] = 0x4d; // M
 						port.write(buffer);
 					}              
 				});
 			}
 			else if (id.endsWith(".setTare") && state.val == true) {
-				this.log.info("setMode");
+				this.log.info("setTare");
 
-				this.setStateAsync("setMode", { val: false, ack: true });
+				this.setStateAsync("setTare", { val: false, ack: true });
 				
 				var port = new SerialPort({
 					path:	    this.config.Port,
@@ -291,11 +291,11 @@ class Myweigh extends utils.Adapter {
 
 				port.open(function (err) {
 					if (err) {
-						this.log.error('Error while opening the port ' + err);
+						adapter.log.error('Error while opening the port ' + err);
 					} else {
 						//this.log.info("do write");
 						var buffer = new Buffer.alloc(1);
-						buffer[0] = 0x54;
+						buffer[0] = 0x54; // T
 						port.write(buffer);
 					}              
 				});
