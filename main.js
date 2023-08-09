@@ -250,8 +250,7 @@ class Myweigh extends utils.Adapter {
 					}
 				});				
 			}
-		} else {
-			if (id.endsWith(".setMode") && state.val == true) {
+			else  if (id.endsWith(".setMode") && state.val == true) {
 				this.log.info("setMode");
 
 				this.setStateAsync("setMode", { val: false, ack: true });
@@ -276,8 +275,7 @@ class Myweigh extends utils.Adapter {
 					}              
 				});
 			}
-		} else {
-			if (id.endsWith(".setTare") && state.val == true) {
+			else if (id.endsWith(".setTare") && state.val == true) {
 				this.log.info("setMode");
 
 				this.setStateAsync("setMode", { val: false, ack: true });
