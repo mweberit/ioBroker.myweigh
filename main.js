@@ -210,11 +210,11 @@ class Myweigh extends utils.Adapter {
 					this.log.info("getData");
 					this.setStateAsync("getData", { val: false, ack: true });
 					buffer[0] = 0x0d;
-				} else if (id.endsWith(".setMode") && state.val == true) {
+				} else if (id.endsWith(".setMode")) {
 					this.log.info("setMode");
 					this.setStateAsync("setMode", { val: false, ack: true });
 					buffer[0] = 0x4d; // M
-				} else if (id.endsWith(".setTare") && state.val == true) {
+				} else if (id.endsWith(".setTare")) {
 					this.log.info("setTare");
 					this.setStateAsync("setTare", { val: false, ack: true });
 					buffer[0] = 0x54; // T
