@@ -13,6 +13,8 @@ const utils = require("@iobroker/adapter-core");
 
 var adapter = utils.adapter('myweigh');
 const { SerialPort } = require("serialport");
+var buffer = new Buffer.alloc(1);
+
 //var SerialPort = require("serialport");
 //var serialport = require("serialport");
 //var SerialPort = serialport.SerialPort;
@@ -205,7 +207,6 @@ class Myweigh extends utils.Adapter {
 			//this.log.info(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
 
 			if (state.val == true && (id.endsWith(".getData") || id.endsWith(".setMode") || id.endsWith(".setTare"))) {
-				var buffer = new Buffer.alloc(1);
 				if (id.endsWith(".getData")) {
 					this.log.info("getData");
 					this.setStateAsync("getData", { val: false, ack: true });
