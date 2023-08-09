@@ -242,6 +242,8 @@ class Myweigh extends utils.Adapter {
 							adapter.setStateAsync("unit", { val: null, ack: true });
 							adapter.setStateAsync("weight", { val: null, ack: true });
 							adapter.setStateAsync("stable", { val: null, ack: true });
+
+							adapter.setStateAsync("getData", { val: true, ack: true });
 						}
 					}              
 				});
