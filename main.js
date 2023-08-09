@@ -235,6 +235,9 @@ class Myweigh extends utils.Adapter {
 						adapter.log.error('Error while opening the port ' + err);
 					} else {
 						port.write(buffer);
+
+						if (!id.endsWith(".getData")) 
+							port.close();
 					}              
 				});
 			
