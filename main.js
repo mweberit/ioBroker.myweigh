@@ -237,7 +237,7 @@ class Myweigh extends utils.Adapter {
 						port.write(buffer);
 
 						if (!id.endsWith(".getData")) {
-							await new Promise(r => setTimeout(r, 500));
+							new Promise(r => setTimeout(r, 500));
 							buffer[0] = 0x0d;
 							port.write(buffer);
 						}
