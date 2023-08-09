@@ -236,8 +236,10 @@ class Myweigh extends utils.Adapter {
 					} else {
 						port.write(buffer);
 
-						if (!id.endsWith(".getData")) 
-							port.close();
+						if (!id.endsWith(".getData")) {
+							buffer[0] = 0x0d;
+							port.write(buffer);
+						}
 					}              
 				});
 			
