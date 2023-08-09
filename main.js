@@ -238,7 +238,7 @@ class Myweigh extends utils.Adapter {
 
 					var output = Buffer.from(read, 'hex');
 					var str = output.toString();
-					//this.log.info("read " + str);
+					adapter.log.info(str);
 					
 					if (str.charAt(1) == "M") {
 						adapter.setStateAsync("message", { val: str.substring(2, 9), ack: true });
