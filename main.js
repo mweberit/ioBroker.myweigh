@@ -256,6 +256,9 @@ class Myweigh extends utils.Adapter {
 
 					if (str.charAt(1) == "M") {
 						adapter.setStateAsync("message", { val: str.substring(2, 9), ack: true });
+						adapter.setStateAsync("unit", { val: null, ack: true });
+						adapter.setStateAsync("weight", { val: null, ack: true });
+						adapter.setStateAsync("stable", { val: null, ack: true });
 					} else if (str.charAt(1) == "W") {
 						var w = Number(str.substring(3, 9));
 						if (str.charAt(2) == "-")
