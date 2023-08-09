@@ -95,7 +95,7 @@ class Myweigh extends utils.Adapter {
 			},
 			native: {},
 		});
-		await this.setObjectNotExistsAsync("dataRequest", {
+		await this.setObjectNotExistsAsync("getData", {
 			type: "state",
 			common: {
 				name: "Get data from scale now",
@@ -106,9 +106,33 @@ class Myweigh extends utils.Adapter {
 			},
 			native: {},
 		});
+		await this.setObjectNotExistsAsync("setMode", {
+			type: "state",
+			common: {
+				name: "Change Mode",
+				type: "boolean",
+				role: "button",
+				read: true,
+				write: true,
+			},
+			native: {},
+		});
+		await this.setObjectNotExistsAsync("setTare", {
+			type: "state",
+			common: {
+				name: "Set Tare",
+				type: "boolean",
+				role: "button",
+				read: true,
+				write: true,
+			},
+			native: {},
+		});
 
 		// In order to get state updates, you need to subscribe to them. The following line adds a subscription for our variable we have created above.
-		this.subscribeStates("dataRequest");
+		this.subscribeStates("getData");
+		this.subscribeStates("setMode");
+		this.subscribeStates("setTare");
 		// You can also add a subscription for multiple states. The following line watches all states starting with "lights."
 		// this.subscribeStates("lights.*");
 		// Or, if you really must, you can also watch all states. Don't do this if you don't need to. Otherwise this will cause a lot of unnecessary load on the system:
@@ -181,10 +205,10 @@ class Myweigh extends utils.Adapter {
 			// The state was changed
 			//this.log.info(`state ${id} changed: ${state.val} (ack = ${state.ack})`);
 
-			if (id.endsWith(".dataRequest") && state.val == true) {
-				this.log.info("dataRequest");
+			if (id.endsWith(".getData") && state.val == true) {
+				this.log.info("getData");
 
-				this.setStateAsync("dataRequest", { val: false, ack: true });
+				this.setStateAsync("getData", { val: false, ack: true });
 				
 				var port = new SerialPort({
 					path:	    this.config.Port,
@@ -225,6 +249,58 @@ class Myweigh extends utils.Adapter {
 						adapter.setStateAsync("stable", { val: str.charAt(11) == "S", ack: true });
 					}
 				});				
+			}
+		} else {
+			if (id.endsWith(".setMode") && state.val == true) {
+				this.log.info("setMode");
+
+				this.setStateAsync("setMode", { val: false, ack: true });
+				
+				var port = new SerialPort({
+					path:	    this.config.Port,
+				        baudRate:   9600,
+				        dataBits:   8,
+				        stopBits:   1,
+				        parity:     'none',
+				        autoOpen:   false
+				});
+
+				port.open(function (err) {
+					if (err) {
+						this.log.error('Error while opening the port ' + err);
+					} else {
+						//this.log.info("do write");
+						var buffer = new Buffer.alloc(1);
+						buffer[0] = 0x4d;
+						port.write(buffer);
+					}              
+				});
+			}
+		} else {
+			if (id.endsWith(".setTare") && state.val == true) {
+				this.log.info("setMode");
+
+				this.setStateAsync("setMode", { val: false, ack: true });
+				
+				var port = new SerialPort({
+					path:	    this.config.Port,
+				        baudRate:   9600,
+				        dataBits:   8,
+				        stopBits:   1,
+				        parity:     'none',
+				        autoOpen:   false
+				});
+
+				port.open(function (err) {
+					if (err) {
+						this.log.error('Error while opening the port ' + err);
+					} else {
+						//this.log.info("do write");
+						var buffer = new Buffer.alloc(1);
+						buffer[0] = 0x54;
+						port.write(buffer);
+					}              
+				});
 			}
 		} else {
 			// The state was deleted
