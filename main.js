@@ -44,7 +44,6 @@ class Myweigh extends utils.Adapter {
 		// this.config:
 		this.log.info("config Model: " + this.config.Model);
 		this.log.info("config Port: " + this.config.Port);
-		this.log.info("config Interval: " + this.config.Interval);
 
 		/*
 		For every state in the system there has to be also an object of type state
