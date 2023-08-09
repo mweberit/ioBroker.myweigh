@@ -249,18 +249,16 @@ class Myweigh extends utils.Adapter {
 					var str = output.toString();
 					adapter.log.info(str.replaceAll(" ", "_"));
 
-					if (id.endsWith(".getData")) {
-						if (str.charAt(1) == "M") {
-							adapter.setStateAsync("message", { val: str.substring(2, 9), ack: true });
-						} else if (str.charAt(1) == "W") {
-							var w = Number(str.substring(3, 9));
-							if (str.charAt(2) == "-")
-								w = w * (-1);
-							adapter.setStateAsync("message", { val: "", ack: true });
-							adapter.setStateAsync("unit", { val: str.substring(9, 11), ack: true });
-							adapter.setStateAsync("weight", { val: w, ack: true });
-							adapter.setStateAsync("stable", { val: str.charAt(11) == "S", ack: true });
-						}
+					if (str.charAt(1) == "M") {
+						adapter.setStateAsync("message", { val: str.substring(2, 9), ack: true });
+					} else if (str.charAt(1) == "W") {
+						var w = Number(str.substring(3, 9));
+						if (str.charAt(2) == "-")
+							w = w * (-1);
+						adapter.setStateAsync("message", { val: "", ack: true });
+						adapter.setStateAsync("unit", { val: str.substring(9, 11), ack: true });
+						adapter.setStateAsync("weight", { val: w, ack: true });
+						adapter.setStateAsync("stable", { val: str.charAt(11) == "S", ack: true });
 					}
 				});				
 			}
