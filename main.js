@@ -237,9 +237,11 @@ class Myweigh extends utils.Adapter {
 						port.write(buffer);
 
 						if (!id.endsWith(".getData")) {
-							new Promise(r => setTimeout(r, 500));
-							buffer[0] = 0x0d;
-							port.write(buffer);
+							port.close();
+							adapter.setStateAsync("message", { val: null, ack: true });
+							adapter.setStateAsync("unit", { val: null, ack: true });
+							adapter.setStateAsync("weight", { val: null, ack: true });
+							adapter.setStateAsync("stable", { val: null, ack: true });
 						}
 					}              
 				});
@@ -258,7 +260,7 @@ class Myweigh extends utils.Adapter {
 						var w = Number(str.substring(3, 9));
 						if (str.charAt(2) == "-")
 							w = w * (-1);
-						adapter.setStateAsync("message", { val: "", ack: true });
+						adapter.setStateAsync("message", { val: null, ack: true });
 						adapter.setStateAsync("unit", { val: str.substring(9, 11), ack: true });
 						adapter.setStateAsync("weight", { val: w, ack: true });
 						adapter.setStateAsync("stable", { val: str.charAt(11) == "S", ack: true });
