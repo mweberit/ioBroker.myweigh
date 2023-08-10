@@ -96,6 +96,17 @@ class Myweigh extends utils.Adapter {
 			},
 			native: {},
 		});
+		await this.setObjectNotExistsAsync("lowVoltage", {
+			type: "state",
+			common: {
+			        name: "Low batterie warning",
+			        type: "boolean",
+			        role: "indicator",
+			        read: true,
+			        write: false,
+			},
+			native: {},
+		});
 		await this.setObjectNotExistsAsync("getData", {
 			type: "state",
 			common: {
@@ -210,7 +221,7 @@ class Myweigh extends utils.Adapter {
 				if (id.endsWith(".getData")) {
 					this.log.info("getData");
 					this.setStateAsync("getData", { val: false, ack: true });
-					buffer[0] = 0x0d;
+					buffer[0] = 0x0d; // oder 0x44 D
 				} else if (id.endsWith(".setMode")) {
 					this.log.info("setMode");
 					this.setStateAsync("setMode", { val: false, ack: true });
@@ -242,6 +253,7 @@ class Myweigh extends utils.Adapter {
 							adapter.setStateAsync("unit", { val: null, ack: true });
 							adapter.setStateAsync("weight", { val: null, ack: true });
 							adapter.setStateAsync("stable", { val: null, ack: true });
+							adapter.setStateAsync("lowVoltage", { val: null, ack: true });
 
 							adapter.setStateAsync("getData", { val: true, ack: true });
 						}
@@ -261,6 +273,8 @@ class Myweigh extends utils.Adapter {
 						adapter.setStateAsync("unit", { val: null, ack: true });
 						adapter.setStateAsync("weight", { val: null, ack: true });
 						adapter.setStateAsync("stable", { val: null, ack: true });
+						adapter.setStateAsync("lowVoltage", { val: null, ack: true });
+						
 					} else if (str.charAt(1) == "W") {
 						var w = Number(str.substring(3, 9));
 						if (str.charAt(2) == "-")
@@ -269,6 +283,7 @@ class Myweigh extends utils.Adapter {
 						adapter.setStateAsync("unit", { val: str.substring(9, 11), ack: true });
 						adapter.setStateAsync("weight", { val: w, ack: true });
 						adapter.setStateAsync("stable", { val: str.charAt(11) == "S", ack: true });
+						adapter.setStateAsync("lowVoltage", { val: str.charAt(12) == "L", ack: true });
 					}
 				});				
 			}
